@@ -1,0 +1,114 @@
+body {
+    background-image: url(img/bck.jpg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(img/bck.jpg);
+    background-size: cover;
+    backdrop-filter: blur(7px);
+    z-index: -1; 
+}
+
+header {
+    background-color: #2835af;
+    color: #fff;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.title {
+    font-size: 30px;
+    margin-top: 30px; 
+    margin-left: 40px; 
+    margin-bottom: 30px;
+    color: white;
+}
+
+.text {
+    padding-top: 20px;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #cbc8c8;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-weight: 700;
+    font-size: 20px;
+    transition: 0.5s;
+}
+
+.text:hover {
+    background-color: #b9b9b9;
+}
+
+.text a {
+    color: black;
+    transition: 0.5s;
+}
+
+.text a:hover {
+    text-decoration: underline;
+    color: #6060be;
+}
+
+.text a:active {
+    color: blue;
+}
+
+nav {
+    background-color: #2835af;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: sticky;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 0 40px;
+    border-radius: 12px;
+}
+
+nav ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: 0.5s;
+}
+
+nav ul li a:hover {
+    background-color: #4361ee;
+}
+
+.active {
+    background-color: #4361ee;
+}

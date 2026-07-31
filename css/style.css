@@ -1,0 +1,107 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    background-image: url(img/bck.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    backdrop-filter: blur(7px);
+}
+
+.container {
+    margin: 50px auto;
+    width: 50%;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 1);
+    padding: 90px 30px;
+}
+
+.container .title {
+    text-align: center;
+    color: white;
+    font-family: Arial;
+    font-weight: 600;
+    font-size: 40px;
+    padding-bottom: 10px;
+}
+
+.container .group {
+    padding-top: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.container .group input {
+    font-size: 20px;
+    width: 100%;
+    background: none;
+    border: solid 4px #4895ef;
+    border-radius: 40px;
+    padding: 10px 60px 10px 20px; 
+    outline: none;
+    color: white;
+    transition: 0.5s;
+}
+
+.container .group input::placeholder {
+    color: rgb(196, 173, 173);
+}
+
+.container .group input:focus,
+.container .group input:valid {
+    border-color: #2835af;
+}
+
+.container .group button {
+    width: 100%;
+    border: solid 4px #4895ef;
+    border-radius: 40px;
+    background: transparent;
+    color: white;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    transition: 0.5s;
+}
+
+.container .group button:hover {
+    border-color: #2835af;
+    cursor: pointer;
+}
+
+.container .group button:active {
+    border-color: #2835af;
+}
+
+.textbelowform {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    color: white;
+    font-family: Arial;
+    font-size: 20px;
+}
+
+.textbelowform a {
+    color: white;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+.textbelowform a:hover {
+    text-decoration: underline;
+    color: rgb(90, 158, 204);
+}
+
+.form a:active {
+    color: rgb(0, 81, 255);
+}
