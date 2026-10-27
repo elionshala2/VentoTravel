@@ -10,7 +10,7 @@ if ($mode === 'admin') {
 } elseif ($mode === 'user') {
     $links = ['index.php'=>['nav_about','home'],'destinations.php'=>['nav_destinations','dest'],'booking.php'=>['nav_book','book'],'feedback.php'=>['nav_feedback','fb'],'faq.php'=>['nav_faq','faq'],'history.php'=>['nav_history','hist']];
 } else {
-    $links = ['login.php'=>['nav_login','login'],'register.php'=>['nav_register','reg']];
+    $links = ['index.php'=>['nav_about','home'],'login.php'=>['nav_login','login'],'register.php'=>['nav_register','reg']];
 }
 ?>
 <!DOCTYPE html>
