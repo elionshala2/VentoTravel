@@ -83,6 +83,41 @@
     b.textContent = open ? b.dataset.less : b.dataset.more;
   }));
 
+  // Booking preview
+  const dsel = $('#destination_id');
+  if (dsel && $('#bkPreview')) {
+    const img = $('#bkImg'), empty = $('#bkEmpty'), meta = $('#bkMeta');
+    const upd = () => {
+      const o = dsel.selectedOptions[0];
+      if (!o || !o.value) { img.hidden = true; meta.hidden = true; empty.hidden = false; return; }
+      img.src = o.dataset.img; img.alt = o.dataset.title; img.hidden = false; empty.hidden = true;
+      $('#bkTitle').textContent = o.dataset.title; $('#bkOld').textContent = o.dataset.price + ' €'; $('#bkNew').textContent = o.dataset.disc + ' €'; meta.hidden = false;
+    };
+    dsel.addEventListener('change', upd); upd();
+  }
+
+  // Feedback chips + counter
+  const msg = $('#m');
+  if (msg) {
+    const cnt = $('#cnt'); const sync = () => cnt && (cnt.textContent = msg.value.length);
+    msg.addEventListener('input', sync); sync();
+    $$('.chip').forEach(ch => ch.addEventListener('click', () => {
+      const was = ch.classList.contains('on');
+      $$('.chip').forEach(c => c.classList.remove('on'));
+      msg.value = msg.value.replace(/^\[[^\]]*\]\s*/, '');
+      if (!was) { ch.classList.add('on'); msg.value = `[${ch.dataset.chip}] ` + msg.value; }
+      msg.focus(); sync();
+    }));
+  }
+
+  // FAQ search
+  const fs = $('#faqSearch');
+  if (fs) fs.addEventListener('input', () => {
+    const q = fs.value.trim().toLowerCase(); let n = 0;
+    $$('#faqList details').forEach(d => { const ok = d.textContent.toLowerCase().includes(q); d.hidden = !ok; if (ok) n++; });
+    $('#faqNone').hidden = n > 0;
+  });
+
   // Admin / history inline edit panels
   $$('[data-edit]').forEach(btn => btn.addEventListener('click', () => {
     const f = $('#editPanel'); if (!f) return;
