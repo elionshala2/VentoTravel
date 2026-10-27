@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 <html>
 
 <head>
-    <title>Flutura Reisen - Regjistrohu</title>
+    <title>VentoTravel - Regjistrohu</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
     <div class="container">
         <form action="" method="post" class="form">
 
-            <p class="title">Flutura Reisen - Regjistrohu</p>
+            <p class="title">VentoTravel - Regjistrohu</p>
 
             <div class="group">
                 <input type="text" placeholder="Perdoruesi" name="username" required>

@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flutura Reisen - Feedback</title>
+    <title>VentoTravel - Feedback</title>
     <link rel="stylesheet" type="text/css" href="css/ballina.css">
     <style>
         /*stili ekstra*/
@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body style="background-image: url(img/bck.jpg);">
 
     <header>
-        <h1>Flutura Reisen</h1>
+        <h1>VentoTravel</h1>
         <h3>Miresevjen, <?php echo $_SESSION['username']; ?>!</h3>
     </header>
 

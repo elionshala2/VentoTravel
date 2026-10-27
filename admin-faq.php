@@ -64,7 +64,7 @@ $result = mysqli_query($conn, $query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flutura Reisen - Administrator</title>
+    <title>VentoTravel - Administrator</title>
     <link rel="stylesheet" type="text/css" href="css/adm-destinacionet.css">
     
     <style> 
@@ -113,7 +113,7 @@ $result = mysqli_query($conn, $query);
 <body style="background-image: url(img/bck.jpg)"> <!--per me ndryshu ma leht-->
 
     <header>
-        <h1>Flutura Reisen</h1>
+        <h1>VentoTravel</h1>
         <h3>Miresevjen, <?php echo $_SESSION['username']; ?>!</h3>
     </header>
 

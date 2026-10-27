@@ -51,7 +51,7 @@ if (isset($_GET['remove_feedback'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flutura Reisen - Historiku</title>
+    <title>VentoTravel - Historiku</title>
     <link rel="stylesheet" type="text/css" href="css/ballina.css">
     <style>
         .rezervim {
@@ -119,7 +119,7 @@ if (isset($_GET['remove_feedback'])) {
 <body style="background-image: url(img/bck.jpg);">
 
     <header>
-        <h1>Flutura Reisen</h1>
+        <h1>VentoTravel</h1>
         <h3>Miresevjen, <?php echo $_SESSION['username']; ?>!</h3>
     </header>
 

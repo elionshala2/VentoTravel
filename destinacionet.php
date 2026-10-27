@@ -14,7 +14,7 @@ if (!isset($_SESSION['username'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flutura Reisen - Destinacionet</title>
+    <title>VentoTravel - Destinacionet</title>
     <link rel="stylesheet" type="text/css" href="css/ballina.css">
     <style>
         .destination-container2 {
@@ -119,7 +119,7 @@ if (!isset($_SESSION['username'])) {
 <body style="background-image: url(img/bck.jpg);">
 
     <header>
-        <h1>Flutura Reisen</h1>
+        <h1>VentoTravel</h1>
         <h3>Miresevjen, <?php echo $_SESSION['username'];?>!</h3>
     </header>
 

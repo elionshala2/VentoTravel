@@ -38,13 +38,13 @@ if (isset($_POST['submit'])) {
 
 <head>
     <meta name="author" content="Elion Shala">
-    <title>Flutura Reisen - Kyqu</title>
+    <title>VentoTravel - Kyqu</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body style="background-image: url(img/bck2.jpg)">
     <div class="container">
-        <h3 class="title">Flutura Reisen - Kyqu</h3>
+        <h3 class="title">VentoTravel - Kyqu</h3>
         <form action="" method="post" class="login">
             <div class="group">
                 <input type="email" name="email" placeholder="Email" required>
