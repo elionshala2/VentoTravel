@@ -1,95 +1,44 @@
 <?php
-
-include 'config.php';
-
-error_reporting(0);
-
 session_start();
+include 'config.php';
+include 'includes/lang.php';
+if (isset($_SESSION['username'])) { header('Location: index.php'); exit; }
 
-if (isset($_SESSION['username'])) {
-    header("Location: index.php");
-}
-
+$ok = false;
 if (isset($_POST['submit'])) {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = md5($_POST['password']);
-    $cpassword = md5($_POST['cpassword']);
-
-    // per ta shikuar nese don te regjistrohet me emailin admin@gmail.com (emaili i administratorit) ku nuk lejohet
-    if ($email === 'admin@gmail.com') {
-        echo "<script>alert('Te lutem provo nje email tjeter!')</script>";
-    } else {
-        if ($username === 'admin') { // me shiku nese don me u regjistru me username 'admin', ku nuk lejohet pasi me ket username, eshte administratori
-            echo "<script>alert('Te lutem provo nje perdorues tjeter!')</script>";
-        } else {
-            if ($password === $cpassword) { // me shiku nese pasworded jan te njejta
-                $sql = "SELECT * FROM regjistrimi WHERE email='$email'";
-                $result = mysqli_query($conn, $sql);
-
-                if (!$result->num_rows > 0) {
-                    $sql = "INSERT INTO regjistrimi (username, email, password) VALUES ('$username', '$email', '$password')";
-                    $result = mysqli_query($conn, $sql);
-
-                    if ($result) {
-                        echo "<script>alert('Urime, ju jeni regjistruar me sukses!')</script>";
-                        $username = "";
-                        $email = "";
-                        $_POST['password'] = "";
-                        $_POST['cpassword'] = "";
-                    } else {
-                        echo "<script>alert('Ups! Dicka shkoj gabim, provo perseri!')</script>";
-                    }
-                } else {
-                echo "<script>alert('Ups! Ky email ekziston, provo nje tjeter!')</script>";
-                }
-            } else {
-                echo "<script>alert('Ups! Fjalekalimet nuk perputhen!')</script>";
-            }
+    $username = trim($_POST['username'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $pw = $_POST['password'] ?? '';
+    if ($email === 'admin@gmail.com') flash(t('err_email_admin'), 'err');
+    elseif (strtolower($username) === 'admin') flash(t('err_user_admin'), 'err');
+    elseif ($pw !== ($_POST['cpassword'] ?? '')) flash(t('err_pw'), 'err');
+    else {
+        $st = $conn->prepare('SELECT id FROM regjistrimi WHERE email=?');
+        $st->bind_param('s', $email); $st->execute();
+        if ($st->get_result()->num_rows > 0) flash(t('err_email_taken'), 'err');
+        else {
+            $hash = md5($pw);
+            $st = $conn->prepare('INSERT INTO regjistrimi (username, email, password) VALUES (?,?,?)');
+            $st->bind_param('sss', $username, $email, $hash);
+            if ($st->execute()) { flash(t('ok_reg')); $ok = true; } else flash(t('err_generic'), 'err');
         }
     }
 }
-
+$mode = 'public'; $page = 'reg'; $seo_t = 'seo_reg_t'; $seo_d = 'seo_reg_d';
+include 'includes/header.php';
 ?>
-
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>VentoTravel - Regjistrohu</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-</head>
-
-<body style="background-image: url(img/bck.jpg)">
-    <div class="container">
-        <form action="" method="post" class="form">
-
-            <p class="title">VentoTravel - Regjistrohu</p>
-
-            <div class="group">
-                <input type="text" placeholder="Perdoruesi" name="username" required>
-            </div>
-
-            <div class="group">
-                <input type="email" placeholder="Email" name="email" required>
-            </div>
-
-            <div class="group">
-                <input type="password" placeholder="Fjalekalimi" name="password" required>
-            </div>
-
-            <div class="group">
-                <input type="password" placeholder="Perserit Fjalekalimin" name="cpassword" required>
-            </div>
-
-            <div class="group">
-                <button name="submit" class="button">Regjistrohu</button>
-            </div>
-
-            <p class="textbelowform">Ke llogari? <a href="index.php">Kyqu tani!</a></p>
-
-        </form>
+<section class="auth">
+  <form method="post" class="panel reveal">
+    <h1><?= t('reg_title') ?></h1>
+    <p class="sub"><?= t('reg_sub') ?></p>
+    <div class="field"><label for="u"><?= t('username') ?></label><input id="u" type="text" name="username" autocomplete="username" required value="<?= $ok ? '' : h($_POST['username'] ?? '') ?>"></div>
+    <div class="field"><label for="e"><?= t('email') ?></label><input id="e" type="email" name="email" autocomplete="email" required value="<?= $ok ? '' : h($_POST['email'] ?? '') ?>"></div>
+    <div class="row2">
+      <div class="field"><label for="p"><?= t('password') ?></label><input id="p" type="password" name="password" autocomplete="new-password" required></div>
+      <div class="field"><label for="cp"><?= t('confirm_pw') ?></label><input id="cp" type="password" name="cpassword" autocomplete="new-password" required></div>
     </div>
-</body>
-
-</html>
+    <button class="btn btn--primary" type="submit" name="submit"><?= t('reg_btn') ?></button>
+    <p class="below"><?= t('has_account') ?> <a href="login.php"><?= t('login_link') ?></a></p>
+  </form>
+</section>
+<?php include 'includes/footer.php'; ?>
