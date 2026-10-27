@@ -4,6 +4,8 @@ vt_session_start();
 vt_security_headers();
 include 'config.php';
 include 'includes/lang.php';
+require_once 'includes/auth_lib.php';
+if (!empty($_SESSION['login_err'])) { flash(t((string)$_SESSION['login_err']), 'err'); unset($_SESSION['login_err']); }
 if (isset($_SESSION['username'])) { header('Location: index.php'); exit; }
 
 $ok = false;
@@ -16,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!csrf_valid()) flash(t('err_csrf'), 'err');
     elseif (rl_count($kIp, 3600) >= 8) flash(t('err_rate'), 'err');
+    elseif (empty($_POST['terms'])) flash(t('err_terms'), 'err');
     elseif (mb_strlen($username) < 3 || mb_strlen($username) > 30 || !preg_match('/^[\p{L}\p{N}_. -]+$/u', $username)) flash(t('err_user_fmt'), 'err');
     elseif (strlen($email) > 255 || !filter_var($email, FILTER_VALIDATE_EMAIL)) flash(t('err_email_fmt'), 'err');
     elseif ($email === 'admin@gmail.com') flash(t('err_email_admin'), 'err');
@@ -40,7 +43,8 @@ include 'includes/header.php';
 ?>
 <section class="auth auth--split">
   <div class="split reveal">
-    <aside class="split__visual" style="--img:url(img/Greqi.jpg)">
+    <aside class="split__visual">
+      <img class="split__bg" src="img/Greqi.jpg" alt="" decoding="async">
       <span class="eyebrow">✈ VentoTravel</span>
       <div class="split__body">
         <h2><?= t('rv_title') ?></h2>
@@ -59,7 +63,9 @@ include 'includes/header.php';
         <div class="field"><label for="cp"><?= t('confirm_pw') ?></label><input id="cp" type="password" name="cpassword" autocomplete="new-password" minlength="8" maxlength="72" required></div>
       </div>
       <p class="hint"><?= t('pw_hint') ?></p>
+      <label class="check"><input type="checkbox" name="terms" value="1" required><span><?= t('agree_pre') ?> <a href="terms.php" target="_blank" rel="noopener"><?= t('legal_terms') ?></a> <?= t('agree_and') ?> <a href="privacy.php" target="_blank" rel="noopener"><?= t('legal_privacy') ?></a></span></label>
       <button class="btn btn--primary" type="submit" name="submit"><?= t('reg_btn') ?></button>
+      <?php $with_passkey = false; include 'includes/social_buttons.php'; ?>
       <p class="secure">🔒 <?= t('trust_secure') ?></p>
       <p class="below"><?= t('has_account') ?> <a href="login.php"><?= t('login_link') ?></a> · <a href="index.php">← <?= t('back_home') ?></a></p>
     </form>

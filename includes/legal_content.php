@@ -1,0 +1,58 @@
+<?php
+// Privacy Policy + Terms of Service text (EN / SQ). Review with a lawyer before relying on it.
+return [
+'en' => [
+ 'privacy' => ['title' => 'Privacy Policy', 'sections' => [
+  ['Who we are', 'VentoTravel (“we”, “us”) is a travel agency. This policy explains what personal data we collect through this website, why we collect it and what choices you have. You can contact us at {email}.'],
+  ['Data we collect', 'Account data: your username, email address and a hashed password (we never store your password in readable form). Booking and feedback details that you submit. If you sign in with Google or Apple, we receive a provider ID, your verified email and your name. If you add a passkey, we store its public key only; your fingerprint, face or device PIN never leave your device.'],
+  ['Cookies', 'We use only essential cookies: a session cookie that keeps you signed in, and cookies that remember your language and theme. We do not use advertising or tracking cookies. Fonts are loaded from Google Fonts, which may receive your IP address.'],
+  ['How we use your data', 'To create and manage your account, process booking requests and contact you about them, answer your feedback, and keep the site secure (for example by limiting repeated failed logins).'],
+  ['Sharing', 'We do not sell your data. We share it only with service providers needed to run the site (such as hosting and the sign-in provider you choose) or when the law requires it.'],
+  ['Retention', 'We keep your account data while your account is active. Booking records are kept as long as needed for our business and legal obligations. You can ask us to delete your account at any time.'],
+  ['Security', 'We protect your data with encrypted connections, hashed passwords, CSRF protection and rate limiting. No system is perfectly secure, so please use a strong, unique password or a passkey.'],
+  ['Your rights', 'Under applicable data protection law you can ask to access, correct, delete, restrict or export your data, and to object to certain processing. Contact us at {email}. You may also complain to your national data protection authority.'],
+  ['Children', 'Our services are not directed to children under 16, and we do not knowingly collect their data.'],
+  ['Changes', 'We may update this policy. The date at the top shows the latest version.'],
+ ]],
+ 'terms' => ['title' => 'Terms of Service', 'sections' => [
+  ['Acceptance', 'By creating an account or using VentoTravel you agree to these Terms and to our Privacy Policy. If you do not agree, please do not use the site.'],
+  ['Your account', 'Give accurate information and keep your password or passkey safe. You are responsible for activity on your account. Tell us at once if you suspect unauthorised use. We may suspend accounts that break these Terms.'],
+  ['Bookings', 'A booking made on the site is a request. It becomes final only when our team confirms it. Prices, discounts and availability may change until confirmation. Offers such as the 5% discount apply only on the conditions stated when they are shown.'],
+  ['Acceptable use', 'Do not break the law, attempt to bypass security, scrape the site, overload our systems, or submit false or harmful content.'],
+  ['Content you submit', 'You keep ownership of the feedback you send, and you allow us to use it to run and improve our services.'],
+  ['Our content', 'The site design, text, logos and images belong to VentoTravel or its licensors. Do not copy them without permission.'],
+  ['Third-party services', 'Sign-in with Google or Apple is governed by those providers’ own terms and privacy policies.'],
+  ['Disclaimers and liability', 'Travel information is provided in good faith “as is”. To the extent the law allows, we are not liable for indirect losses or for events outside our control. Nothing in these Terms limits liability that cannot be limited by law, or your mandatory consumer rights.'],
+  ['Termination', 'You may stop using the site and ask us to delete your account at any time. We may end access if you seriously or repeatedly break these Terms.'],
+  ['Governing law', 'These Terms are governed by the laws of the Republic of Kosovo, without affecting any mandatory consumer protections that apply where you live.'],
+  ['Changes and contact', 'We may update these Terms and will show the latest date here. Questions? Write to {email}.'],
+ ]],
+],
+'sq' => [
+ 'privacy' => ['title' => 'Politika e Privatësisë', 'sections' => [
+  ['Kush jemi', 'VentoTravel (“ne”) është një agjenci udhëtimi. Kjo politikë shpjegon çfarë të dhënash personale mbledhim përmes kësaj faqeje, pse i mbledhim dhe çfarë zgjedhjesh keni. Mund të na kontaktoni në {email}.'],
+  ['Të dhënat që mbledhim', 'Të dhënat e llogarisë: emri i përdoruesit, email-i dhe një fjalëkalim i koduar (nuk e ruajmë kurrë fjalëkalimin në formë të lexueshme). Detajet e rezervimeve dhe komentet që dërgoni. Nëse kyçeni me Google ose Apple, marrim një ID të ofruesit, email-in tuaj të verifikuar dhe emrin. Nëse shtoni një passkey, ruajmë vetëm çelësin publik; gjurma e gishtit, fytyra ose PIN-i i pajisjes nuk largohen kurrë nga pajisja juaj.'],
+  ['Cookies', 'Përdorim vetëm cookies thelbësore: një cookie sesioni që ju mban të kyçur dhe cookies që mbajnë mend gjuhën dhe temën. Nuk përdorim cookies reklamuese ose gjurmuese. Shkronjat ngarkohen nga Google Fonts, i cili mund të marrë adresën tuaj IP.'],
+  ['Si i përdorim të dhënat', 'Për të krijuar dhe menaxhuar llogarinë tuaj, për të përpunuar kërkesat për rezervim dhe për t’ju kontaktuar rreth tyre, për t’iu përgjigjur komenteve dhe për ta mbajtur faqen të sigurt (p.sh. duke kufizuar kyçjet e dështuara të përsëritura).'],
+  ['Ndarja e të dhënave', 'Nuk i shesim të dhënat tuaja. I ndajmë vetëm me ofruesit e shërbimeve të nevojshme për funksionimin e faqes (si hostimi dhe ofruesi i kyçjes që zgjidhni) ose kur e kërkon ligji.'],
+  ['Ruajtja', 'Të dhënat e llogarisë i ruajmë sa kohë llogaria është aktive. Regjistrat e rezervimeve ruhen sa të jetë e nevojshme për detyrimet tona afariste dhe ligjore. Mund të kërkoni fshirjen e llogarisë në çdo kohë.'],
+  ['Siguria', 'I mbrojmë të dhënat me lidhje të enkriptuara, fjalëkalime të koduara, mbrojtje nga CSRF dhe kufizim përpjekjesh. Asnjë sistem nuk është plotësisht i sigurt, ndaj përdorni një fjalëkalim të fortë dhe unik ose një passkey.'],
+  ['Të drejtat tuaja', 'Sipas ligjit në fuqi për mbrojtjen e të dhënave mund të kërkoni qasje, korrigjim, fshirje, kufizim ose eksportim të të dhënave tuaja, si dhe të kundërshtoni disa përpunime. Na kontaktoni në {email}. Mund të ankoheni edhe te autoriteti kombëtar për mbrojtjen e të dhënave.'],
+  ['Fëmijët', 'Shërbimet tona nuk u drejtohen fëmijëve nën 16 vjeç dhe nuk mbledhim me dije të dhëna të tyre.'],
+  ['Ndryshimet', 'Mund ta përditësojmë këtë politikë. Data në krye tregon versionin e fundit.'],
+ ]],
+ 'terms' => ['title' => 'Kushtet e Shërbimit', 'sections' => [
+  ['Pranimi', 'Duke krijuar një llogari ose duke përdorur VentoTravel pranoni këto Kushte dhe Politikën tonë të Privatësisë. Nëse nuk pajtoheni, mos e përdorni faqen.'],
+  ['Llogaria juaj', 'Jepni informacion të saktë dhe ruajeni fjalëkalimin ose passkey-n të sigurt. Ju jeni përgjegjës për veprimtarinë në llogarinë tuaj. Na lajmëroni menjëherë nëse dyshoni për përdorim të paautorizuar. Mund t’i pezullojmë llogaritë që shkelin këto Kushte.'],
+  ['Rezervimet', 'Një rezervim i bërë në faqe është kërkesë. Bëhet përfundimtar vetëm kur ekipi ynë e konfirmon. Çmimet, zbritjet dhe disponueshmëria mund të ndryshojnë deri në konfirmim. Ofertat si zbritja 5% vlejnë vetëm sipas kushteve të shfaqura.'],
+  ['Përdorimi i pranueshëm', 'Mos shkelni ligjin, mos tentoni të anashkaloni sigurinë, mos nxirrni automatikisht të dhëna nga faqja, mos mbingarkoni sistemet tona dhe mos dërgoni përmbajtje të rreme ose të dëmshme.'],
+  ['Përmbajtja që dërgoni', 'Ju mbani pronësinë e komenteve që dërgoni dhe na lejoni t’i përdorim për të ofruar dhe përmirësuar shërbimet tona.'],
+  ['Përmbajtja jonë', 'Dizajni, teksti, logot dhe imazhet i përkasin VentoTravel ose licencuesve të tij. Mos i kopjoni pa leje.'],
+  ['Shërbimet e palëve të treta', 'Kyçja me Google ose Apple rregullohet nga kushtet dhe politikat e privatësisë të atyre ofruesve.'],
+  ['Mohimet dhe përgjegjësia', 'Informacioni i udhëtimit jepet me mirëbesim “siç është”. Në masën që e lejon ligji, nuk mbajmë përgjegjësi për humbje indirekte ose ngjarje jashtë kontrollit tonë. Asgjë këtu nuk kufizon përgjegjësinë që nuk mund të kufizohet me ligj, as të drejtat tuaja detyruese si konsumator.'],
+  ['Përfundimi', 'Mund të ndaloni përdorimin e faqes dhe të kërkoni fshirjen e llogarisë në çdo kohë. Ne mund ta ndërpresim qasjen nëse i shkelni rëndë ose vazhdimisht këto Kushte.'],
+  ['Ligji në fuqi', 'Këto Kushte rregullohen nga ligjet e Republikës së Kosovës, pa cenuar mbrojtjen detyruese të konsumatorit që vlen aty ku jetoni.'],
+  ['Ndryshimet dhe kontakti', 'Mund t’i përditësojmë këto Kushte dhe këtu do të shfaqet data e fundit. Pyetje? Shkruani në {email}.'],
+ ]],
+],
+];

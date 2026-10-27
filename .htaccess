@@ -12,10 +12,10 @@ Options -Indexes
   php_flag display_errors off
   php_flag expose_php off
 </IfModule>
-<FilesMatch "\.(sql|md|log|ini|bak|txt)$">
+<FilesMatch "\.(sql|md|log|ini|bak|txt|lock)$">
   Require all denied
 </FilesMatch>
-<FilesMatch "^config\.php$">
+<FilesMatch "^(config\.php|composer\.json|\.env.*|\.gitignore)$">
   Require all denied
 </FilesMatch>
-RedirectMatch 404 /\.git
+RedirectMatch 404 /(\.git|vendor|includes)(/|$)

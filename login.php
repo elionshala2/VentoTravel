@@ -4,6 +4,8 @@ vt_session_start();
 vt_security_headers();
 include 'config.php';
 include 'includes/lang.php';
+require_once 'includes/auth_lib.php';
+if (!empty($_SESSION['login_err'])) { flash(t((string)$_SESSION['login_err']), 'err'); unset($_SESSION['login_err']); }
 if (isset($_SESSION['username'])) { header('Location: ' . ($_SESSION['username'] === 'admin' ? 'admin.php' : 'index.php')); exit; }
 
 // Admin account (bcrypt of the old password). Change it: see README-SECURITY.txt
@@ -56,9 +58,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         if ($ok) {
             rl_clear($kUser);
+            require_once 'includes/account_lib.php';
+            if ($uid !== null) {
+                $tf = false; $em = '';
+                try { $q = $conn->prepare('SELECT twofa_enabled, email FROM regjistrimi WHERE id=?'); $q->bind_param('i', $uid); $q->execute(); $r2 = $q->get_result()->fetch_assoc(); $tf = !empty($r2['twofa_enabled']); $em = (string)($r2['email'] ?? ''); } catch (Throwable $e) {}
+                if ($tf) {
+                    session_regenerate_id(true);
+                    $_SESSION = ['pending_2fa' => ['id' => $uid, 'username' => $uname, 'exp' => time() + 600], 'csrf' => bin2hex(random_bytes(32))];
+                    vt_code_send($conn, $uid, 'login', $em, $uname);
+                    header('Location: login-2fa.php'); exit;
+                }
+            }
             session_regenerate_id(true);
             $_SESSION = ['username' => $uname, 'csrf' => bin2hex(random_bytes(32))];
-            if ($uid !== null) $_SESSION['id'] = $uid;
+            if ($uid !== null) { $_SESSION['id'] = $uid; vt_track_session($conn, $uid); }
             header('Location: ' . ($uname === 'admin' ? 'admin.php' : 'index.php')); exit;
         }
         rl_hit($kUser, 900); rl_hit($kIp, 900);
@@ -70,7 +83,8 @@ include 'includes/header.php';
 ?>
 <section class="auth auth--split">
   <div class="split reveal">
-    <aside class="split__visual" style="--img:url(img/Budva.jpg)">
+    <aside class="split__visual">
+      <img class="split__bg" src="img/Budva.jpg" alt="" decoding="async">
       <span class="eyebrow">✈ VentoTravel</span>
       <div class="split__body">
         <h2><?= t('lv_title') ?></h2>
@@ -86,10 +100,12 @@ include 'includes/header.php';
       <div class="field"><label for="pw"><?= t('password') ?></label>
         <div class="pw"><input id="pw" type="password" name="password" autocomplete="current-password" maxlength="72" required><button type="button" class="pw__toggle" data-show="<?= h(t('show_pw')) ?>" data-hide="<?= h(t('hide_pw')) ?>"><?= h(t('show_pw')) ?></button></div></div>
       <button class="btn btn--primary" type="submit" name="submit"><?= t('login_btn') ?></button>
+      <?php $with_passkey = true; include 'includes/social_buttons.php'; ?>
       <p class="secure">🔒 <?= t('trust_secure') ?></p>
       <p class="below"><?= t('no_account') ?> <a href="register.php"><?= t('signup_link') ?></a> · <a href="index.php">← <?= t('back_home') ?></a></p>
     </form>
   </div>
 </section>
 <script src="js/auth.js" defer></script>
+<script src="js/passkey.js" defer></script>
 <?php include 'includes/footer.php'; ?>

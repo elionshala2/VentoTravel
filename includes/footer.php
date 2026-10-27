@@ -2,7 +2,10 @@
 <footer class="footer">
   <div class="footer__inner">
     <div><strong>VentoTravel</strong><p><?= h(t('footer_tag')) ?></p></div>
-    <p>© <?= date('Y') ?> VentoTravel. <?= h(t('footer_rights')) ?></p>
+    <div class="footer__right">
+      <nav class="footer__links" aria-label="Legal"><a href="privacy.php"><?= h(t('legal_privacy')) ?></a><a href="terms.php"><?= h(t('legal_terms')) ?></a></nav>
+      <p>© <?= date('Y') ?> VentoTravel. <?= h(t('footer_rights')) ?></p>
+    </div>
   </div>
 </footer>
 <?php if (!empty($FLASH)): ?>

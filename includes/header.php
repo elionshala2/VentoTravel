@@ -61,7 +61,7 @@ if ($mode === 'admin') {
     </nav>
     <div class="nav__actions">
       <?php if ($mode !== 'public' && isset($_SESSION['username'])): ?>
-        <span class="user-chip" title="<?= h($_SESSION['username']) ?>"><i><?= h(strtoupper(mb_substr($_SESSION['username'], 0, 1))) ?></i><span><?= h($_SESSION['username']) ?></span></span>
+        <a class="user-chip" href="<?= $mode === 'admin' ? 'admin.php' : 'account.php' ?>" title="<?= h(t('account_title')) ?>"><i><?= h(strtoupper(mb_substr($_SESSION['username'], 0, 1))) ?></i><span><?= h($_SESSION['username']) ?></span></a>
       <?php endif; ?>
       <div class="lang" role="group" aria-label="<?= h(t('switch_lang')) ?>">
         <a href="<?= h(lang_url('en')) ?>" class="<?= $LANG === 'en' ? 'on' : '' ?>" hreflang="en" lang="en" title="English">EN</a>
