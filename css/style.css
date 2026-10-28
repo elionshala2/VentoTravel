@@ -369,3 +369,10 @@ a.user-chip:hover{background:rgba(127,127,127,.15)}
 [data-theme=light] .btn--ghost{color:#0f172a;background:rgba(15,23,42,.05);border-color:rgba(15,23,42,.22)}
 [data-theme=light] .btn--ghost:hover{background:rgba(15,23,42,.1)}
 [data-theme=light] .hero .btn--ghost{color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.35)}
+
+/* Demo-project notice on the home page */
+.demo-note{display:flex;gap:.6rem;align-items:center;justify-content:center;text-align:center;margin:1.25rem auto 0;max-width:760px;padding:.7rem 1.1rem;border-radius:14px;font-size:.88rem;line-height:1.45;color:#fde68a;background:rgba(250,204,21,.1);border:1px solid rgba(250,204,21,.35)}
+[data-theme=light] .demo-note{color:#78350f;background:#fef3c7;border-color:#f59e0b}
+
+/* notice lives inside the hero (dark image) in both themes */
+.hero .demo-note,[data-theme=light] .hero .demo-note{justify-content:flex-start;text-align:left;margin:1.75rem 0 0;max-width:560px;color:#fde68a;background:rgba(11,18,32,.6);border-color:rgba(250,204,21,.4);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}

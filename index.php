@@ -21,6 +21,7 @@ include 'includes/header.php';
       <a class="btn btn--ghost" href="login.php"><?= t('nav_login') ?></a>
       <?php endif; ?>
     </div>
+  <p class="demo-note reveal" style="--d:400ms" role="note"><span aria-hidden="true">ℹ️</span> <?= t('demo_note') ?></p>
   </div>
 </section>
 
