@@ -26,10 +26,10 @@ include 'includes/header.php';
   <div class="acct__card">
     <h1>Two-factor verification</h1>
     <p class="sub">We emailed a 6-digit code to the address on your account. Enter it to finish signing in.</p>
-    <form method="post" autocomplete="off"><?= csrf_field() ?>
+    <form method="post" autocomplete="off" class="stack"><?= csrf_field() ?>
       <div class="field"><label for="code">Code</label><input id="code" name="code" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code" required autofocus></div>
-      <button class="btn btn--primary" type="submit">Verify</button>
-      <button class="btn btn--ghost" type="submit" name="resend" value="1" formnovalidate>Resend code</button>
+      <div class="btnrow" style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:center"><button class="btn btn--primary" type="submit">Verify</button>
+      <button class="btn btn--ghost" type="submit" name="resend" value="1" formnovalidate>Resend code</button></div>
     </form>
     <p class="below"><a href="login.php">← Back to login</a></p>
   </div>

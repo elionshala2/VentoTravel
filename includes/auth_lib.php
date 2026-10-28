@@ -51,8 +51,9 @@ function vt_social_login(mysqli $conn, string $provider, string $puid, string $e
 
     $st = $conn->prepare('SELECT id, username FROM regjistrimi WHERE email=? LIMIT 1');
     $st->bind_param('s', $email); $st->execute();
-    if ($row = $st->get_result()->fetch_assoc()) {
-        $uid = (int)$row['id']; $uname = $row['username'];
+    if ($st->get_result()->fetch_assoc()) {
+        // An account with this email already exists and Google isn't linked to it: don't auto-link / log in.
+        return 'err_social_exists';
     } else {
         $base = trim(preg_replace('/[^\p{L}\p{N}_. -]+/u', '', $name));
         if (mb_strlen($base) < 3) $base = preg_replace('/[^\p{L}\p{N}_.-]+/u', '', (string)strstr($email, '@', true));

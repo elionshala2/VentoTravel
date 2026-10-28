@@ -65,3 +65,45 @@ function vt_code_check(mysqli $conn, int $uid, string $purpose, string $code): b
     $u = $conn->prepare('UPDATE email_codes SET attempts=attempts+1 WHERE id=?'); $u->bind_param('i', $r['id']); $u->execute();
     return false;
 }
+
+/** Sign-up email verification: store the pending account (not a real user yet) and email a code. */
+function vt_signup_start(mysqli $conn, string $username, string $email, string $pwHash): bool {
+    $conn->query('DELETE FROM pending_signups WHERE expires_at < NOW()');
+    $code = str_pad((string)random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+    $ch = hash_hmac('sha256', $code, 'signup|' . strtolower($email));
+    $d = $conn->prepare('DELETE FROM pending_signups WHERE email=?'); $d->bind_param('s', $email); $d->execute();
+    $i = $conn->prepare('INSERT INTO pending_signups (email, username, password_hash, code_hash, expires_at) VALUES (?,?,?,?,DATE_ADD(NOW(), INTERVAL 15 MINUTE))');
+    $i->bind_param('ssss', $email, $username, $pwHash, $ch); $i->execute();
+    $e = fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
+    $html = '<!DOCTYPE html><html><body style="margin:0;padding:0;background:#f3f4f6">'
+      . '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f3f4f6;padding:32px 12px"><tr><td align="center">'
+      . '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:20px;padding:36px;font-family:Arial,Helvetica,sans-serif;color:#374151"><tr><td>'
+      . '<div style="font-size:26px;font-weight:700;color:#111827;margin-bottom:24px">Vento<span style="color:#0891b2">Travel</span></div>'
+      . '<h1 style="margin:0 0 12px;font-size:22px;color:#111827">Verify your email</h1>'
+      . '<p style="margin:0 0 20px;font-size:16px;line-height:1.5">Hi ' . $e($username) . ', welcome! Enter this code to finish creating your account:</p>'
+      . '<div style="margin:0 0 24px;padding:18px 0;text-align:center;background:#f3f4f6;border-radius:14px;font-size:34px;letter-spacing:10px;font-weight:700;color:#111827;font-family:Consolas,Menlo,monospace">' . $code . '</div>'
+      . '<a href="' . $e(app_url() . '/verify-email.php') . '" style="display:inline-block;background:#3b82f6;color:#ffffff;text-decoration:none;font-weight:700;font-size:16px;padding:15px 28px;border-radius:12px">Enter code</a>'
+      . '<p style="margin:28px 0 0;font-size:13px;line-height:1.5;color:#6b7280">This code expires in 15 minutes. If you didn\'t sign up for VentoTravel, you can safely ignore this email &mdash; no account will be created.</p>'
+      . '</td></tr></table></td></tr></table></body></html>';
+    return vt_mail($email, 'VentoTravel: Verify your email', "Hi $username,\n\nYour VentoTravel verification code is:\n\n    $code\n\nIt expires in 15 minutes. If you didn't sign up, ignore this email.", $html);
+}
+/** Returns the new user id on success, or null. */
+function vt_signup_finish(mysqli $conn, string $email, string $code): ?array {
+    $code = preg_replace('/\D/', '', $code);
+    $st = $conn->prepare('SELECT id, username, password_hash, code_hash, attempts FROM pending_signups WHERE email=? AND expires_at > NOW() LIMIT 1');
+    $st->bind_param('s', $email); $st->execute();
+    $r = $st->get_result()->fetch_assoc();
+    if (!$r) return null;
+    if ((int)$r['attempts'] >= 5) { $d = $conn->prepare('DELETE FROM pending_signups WHERE id=?'); $d->bind_param('i', $r['id']); $d->execute(); return null; }
+    if (strlen($code) !== 6 || !hash_equals($r['code_hash'], hash_hmac('sha256', $code, 'signup|' . strtolower($email)))) {
+        $u = $conn->prepare('UPDATE pending_signups SET attempts=attempts+1 WHERE id=?'); $u->bind_param('i', $r['id']); $u->execute(); return null;
+    }
+    $c = $conn->prepare('SELECT id FROM regjistrimi WHERE email=? OR username=? LIMIT 1'); $c->bind_param('ss', $email, $r['username']); $c->execute();
+    if ($c->get_result()->num_rows) { $d = $conn->prepare('DELETE FROM pending_signups WHERE id=?'); $d->bind_param('i', $r['id']); $d->execute(); return ['error' => 'taken']; }
+    $i = $conn->prepare('INSERT INTO regjistrimi (username, email, password) VALUES (?,?,?)');
+    $i->bind_param('sss', $r['username'], $email, $r['password_hash']);
+    if (!$i->execute()) return null;
+    $uid = (int)$conn->insert_id;
+    $d = $conn->prepare('DELETE FROM pending_signups WHERE id=?'); $d->bind_param('i', $r['id']); $d->execute();
+    return ['id' => $uid, 'username' => $r['username']];
+}

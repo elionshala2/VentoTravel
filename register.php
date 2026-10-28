@@ -3,6 +3,7 @@ require_once 'includes/security.php';
 vt_session_start();
 vt_security_headers();
 include 'config.php';
+require_once 'includes/account_lib.php';
 include 'includes/lang.php';
 require_once 'includes/auth_lib.php';
 if (!empty($_SESSION['login_err'])) { flash(t((string)$_SESSION['login_err']), 'err'); unset($_SESSION['login_err']); }
@@ -31,10 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $st->bind_param('s', $email); $st->execute();
         if ($st->get_result()->num_rows > 0) flash(t('err_email_taken'), 'err');
         else {
-            $hash = password_hash($pw, PASSWORD_DEFAULT);
-            $st = $conn->prepare('INSERT INTO regjistrimi (username, email, password) VALUES (?,?,?)');
-            $st->bind_param('sss', $username, $email, $hash);
-            if ($st->execute()) { flash(t('ok_reg')); $ok = true; unset($_SESSION['csrf']); } else flash(t('err_generic'), 'err');
+            $un = $conn->prepare('SELECT id FROM regjistrimi WHERE username=? LIMIT 1'); $un->bind_param('s', $username); $un->execute();
+            if ($un->get_result()->num_rows > 0) flash('That username is already taken.', 'err');
+            elseif (vt_signup_start($conn, $username, $email, password_hash($pw, PASSWORD_DEFAULT))) {
+                $_SESSION['pending_signup'] = $email;
+                header('Location: verify-email.php'); exit;
+            } else flash('Could not send the verification email: ' . ($GLOBALS['VT_MAIL_ERR'] ?: 'unknown error'), 'err');
         }
     }
 }

@@ -108,7 +108,7 @@ if ($act !== '') {
     }
 }
 $g = $_GET['glink'] ?? '';
-if ($g === 'ok') { $msg = 'Google account connected.'; } elseif ($g === 'taken') { $msg = 'That Google account is already linked to another user.'; $type = 'err'; }
+if ($g === 'ok') { $msg = 'Google account connected. Your account email is now ' . $U['email'] . '.'; } elseif ($g === 'emailtaken') { $msg = 'That Google email is already used by another account, so it can\'t be connected.'; $type = 'err'; } elseif ($g === 'taken') { $msg = 'That Google account is already linked to another user.'; $type = 'err'; }
 if ($msg !== '') flash($msg, $type);
 
 $st = $conn->prepare('SELECT id, name, created_at, last_used_at FROM passkeys WHERE user_id=? ORDER BY id DESC'); $st->bind_param('i', $uid); $st->execute(); $keys = $st->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -125,8 +125,8 @@ include 'includes/header.php';
 function code_form(string $p): void { ?>
   <form method="post" class="stack"><?= csrf_field() ?><input type="hidden" name="purpose" value="<?= h($p) ?>">
     <div class="field"><label>Verification code</label><input name="code" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code" required></div>
-    <button class="btn btn--primary" name="action" value="code_confirm">Confirm</button>
-    <button class="btn btn--ghost" name="action" value="code_cancel" formnovalidate>Cancel</button>
+    <div class="btnrow" style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:center"><button class="btn btn--primary" name="action" value="code_confirm">Confirm</button>
+    <button class="btn btn--ghost" name="action" value="code_cancel" formnovalidate>Cancel</button></div>
   </form>
 <?php } ?>
 <section class="acct">

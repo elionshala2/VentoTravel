@@ -23,6 +23,16 @@ if (!empty($_SESSION['oauth_link'])) {
     $c = $conn->prepare('SELECT user_id FROM oauth_accounts WHERE provider=? AND provider_uid=?'); $pg = 'google'; $c->bind_param('ss', $pg, $pu); $c->execute();
     $ex = $c->get_result()->fetch_assoc();
     if ($ex && (int)$ex['user_id'] !== $lu) { header('Location: ' . $dest . '?glink=taken'); exit; }
+    if (!$ex) {
+        $ge = strtolower(trim((string)$d['email']));
+        $cur = $conn->prepare('SELECT email FROM regjistrimi WHERE id=?'); $cur->bind_param('i', $lu); $cur->execute();
+        $curEmail = strtolower((string)($cur->get_result()->fetch_assoc()['email'] ?? ''));
+        if ($ge !== $curEmail) {   // the account email becomes the Google email
+            $tk = $conn->prepare('SELECT id FROM regjistrimi WHERE email=? AND id<>? LIMIT 1'); $tk->bind_param('si', $ge, $lu); $tk->execute();
+            if ($tk->get_result()->num_rows || $ge === 'admin@gmail.com' || strlen($ge) > 255) { header('Location: ' . $dest . '?glink=emailtaken'); exit; }
+            $ue = $conn->prepare('UPDATE regjistrimi SET email=? WHERE id=?'); $ue->bind_param('si', $ge, $lu); $ue->execute();
+        }
+    }
     if (!$ex) { $i = $conn->prepare('INSERT INTO oauth_accounts (user_id, provider, provider_uid) VALUES (?,?,?)'); $i->bind_param('iss', $lu, $pg, $pu); $i->execute(); }
     header('Location: ' . $dest . '?glink=ok'); exit;
 }

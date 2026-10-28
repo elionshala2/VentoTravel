@@ -31,3 +31,15 @@ CREATE TABLE IF NOT EXISTS `email_codes` (
 
 -- Optional: accounts that were originally created through Google (never set a password) can be marked like this:
 -- UPDATE regjistrimi r SET has_password=0 WHERE EXISTS (SELECT 1 FROM oauth_accounts o WHERE o.user_id=r.id) AND NOT EXISTS (SELECT 1 FROM user_sessions);
+
+CREATE TABLE IF NOT EXISTS `pending_signups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `code_hash` char(64) NOT NULL,
+  `attempts` tinyint(4) NOT NULL DEFAULT 0,
+  `expires_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_pending_email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

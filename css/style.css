@@ -346,3 +346,26 @@ a.user-chip:hover{background:rgba(127,127,127,.15)}
 .split__visual>*:not(.split__bg){position:relative;z-index:2}
 .split__visual h2,.split__visual .perks li{text-shadow:0 2px 14px rgba(0,0,0,.45)}
 .acct .stack{display:grid;gap:.9rem}.acct .stack .btn{justify-self:start}.acct__card form+form{margin-top:.5rem}
+.btnrow{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin-top:.25rem}.btnrow .btn{position:relative;margin:0;width:auto;flex:0 0 auto}.acct .stack{display:grid;gap:1rem}
+
+/* Navbar: always a solid, blurred bar so it stays readable over hero images in both themes */
+.nav{background:rgba(11,18,32,.82);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-bottom-color:var(--line);box-shadow:0 8px 30px -20px rgba(0,0,0,.6)}
+[data-theme=light] .nav{background:rgba(244,247,252,.88);box-shadow:0 8px 30px -22px rgba(30,41,90,.35)}
+[data-theme=light] .nav.is-scrolled{background:rgba(244,247,252,.94)}
+.nav .brand{color:#f1f5f9}[data-theme=light] .nav .brand{color:#0f172a}
+.nav__links a{color:#cbd5e1}[data-theme=light] .nav__links a{color:#334155}
+.nav__links a:hover,.nav__links a.is-active{color:#fff}[data-theme=light] .nav__links a:hover,[data-theme=light] .nav__links a.is-active{color:#0f172a}
+.user-chip{color:#e2e8f0}[data-theme=light] .user-chip{color:#0f172a}
+.lang a{color:#cbd5e1}[data-theme=light] .lang a{color:#334155}.lang a.on,[data-theme=light] .lang a.on{color:#fff}
+.nav .nav__logout{color:var(--rose)!important}
+@media(max-width:980px){.nav__links a{color:#fff}[data-theme=light] .nav__links a{color:#0f172a}}
+
+/* Link-buttons inside the account page: keep button styling (the generic .acct a rule made them cyan + underlined) */
+.acct a.btn,[data-theme=light] .acct a.btn{text-decoration:none}
+.acct a.btn--primary,[data-theme=light] .acct a.btn--primary{color:#fff}
+[data-theme=light] .acct a.btn--ghost{color:#0f172a}
+
+/* Ghost buttons were white-on-white in light mode */
+[data-theme=light] .btn--ghost{color:#0f172a;background:rgba(15,23,42,.05);border-color:rgba(15,23,42,.22)}
+[data-theme=light] .btn--ghost:hover{background:rgba(15,23,42,.1)}
+[data-theme=light] .hero .btn--ghost{color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.35)}
